@@ -20,6 +20,7 @@ addEventListener("load", function load() {
 
   let close = document.querySelector("#cucks_close");
   let move = document.querySelector("#cucks_move");
+  let dupes = document.querySelector("#cucks_dupes");
   let menu = document.querySelector("#tabContextMenu");
 
   menu.addEventListener("popupshowing", e => {
@@ -34,7 +35,7 @@ addEventListener("load", function load() {
     move.setAttribute("label", `Move all ${host} tabs to a new window`);
   }, true);
 
-  close.addEventListener("click", e => {;
+  close.addEventListener("click", e => {
     let host = null;
     try {
       host = hostOf(TabContextMenu.contextTab);
@@ -55,7 +56,7 @@ addEventListener("load", function load() {
     }
   });
 
-  move.addEventListener("click", e => {;
+  move.addEventListener("click", e => {
     let host = null;
     try {
       host = hostOf(TabContextMenu.contextTab);
@@ -85,5 +86,22 @@ addEventListener("load", function load() {
       newwin.removeEventListener("load", newload);
       tomove.forEach(t => newwin.gBrowser.adoptTab(t, 1, false));
     });
+  });
+
+  dupes.addEventListener("click", e => {
+    let known = new Set();
+    for (let tab of Array.from(gBrowser.tabs)) {
+      try {
+        let spec = tab.linkedBrowser.currentURI.spec;
+        if (!known.has(spec)) {
+          known.add(spec);
+          continue;
+        }
+        gBrowser.removeTab(tab);
+      }
+      catch (ex) {
+        console.error(ex);
+      }
+    }
   });
 });
