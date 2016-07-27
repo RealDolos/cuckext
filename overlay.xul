@@ -3,6 +3,6 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="text/javascript" src="overlay.js"/>
   <menupopup id="tabContextMenu">
-    <menuitem label="cucks" id="cucks_menuitem" insertafte="context_openTabInWindow"/>
+    <menuitem label="cucks" id="cucks_menuitem" insertafter="context_openTabInWindow"/>
   </menupopup>
 </overlay>
