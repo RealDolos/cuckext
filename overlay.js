@@ -1,4 +1,4 @@
-addEventListener("load", e => {
+addEventListener("load", function load() {
   function uriOf(tab) {
     return tab.linkedBrowser.currentURI;
   }
@@ -15,6 +15,8 @@ addEventListener("load", e => {
       return host;
     }
   }
+
+  removeEventListener("load", load);
 
   let close = document.querySelector("#cucks_close");
   let move = document.querySelector("#cucks_move");
@@ -79,7 +81,8 @@ addEventListener("load", e => {
     let anchor = tomove.shift();
     tomove.reverse();
     let newwin = gBrowser.replaceTabWithWindow(anchor);
-    newwin.addEventListener("load", e => {
+    newwin.addEventListener("load", function newload() {
+      newwin.removeEventListener("load", newload);
       tomove.forEach(t => newwin.gBrowser.adoptTab(t, 1, false));
     });
   });
